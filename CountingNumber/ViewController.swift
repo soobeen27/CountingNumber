@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
 
@@ -57,37 +58,30 @@ class ViewController: UIViewController {
     }
 
     func setLayout() {
-        numberLabel.translatesAutoresizingMaskIntoConstraints = false
-        incrementBtn.translatesAutoresizingMaskIntoConstraints = false
-        decrementBtn.translatesAutoresizingMaskIntoConstraints = false
-        initialiseBtn.translatesAutoresizingMaskIntoConstraints = false
         [numberLabel, incrementBtn, decrementBtn, initialiseBtn]
             .forEach {
                 view.addSubview($0)
             }
-        NSLayoutConstraint.activate([
-            numberLabel.widthAnchor.constraint(equalToConstant: 80),
-            numberLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            numberLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            incrementBtn.widthAnchor.constraint(equalToConstant: 80),
-            incrementBtn.heightAnchor.constraint(equalToConstant: 30),
-            incrementBtn.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            incrementBtn.leadingAnchor.constraint(equalTo: numberLabel.trailingAnchor, constant: 32),
-            
-            decrementBtn.widthAnchor.constraint(equalToConstant: 80),
-            decrementBtn.heightAnchor.constraint(equalToConstant: 30),
-            decrementBtn.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            decrementBtn.trailingAnchor.constraint(equalTo: numberLabel.leadingAnchor, constant: -32),
-            
-            initialiseBtn.widthAnchor.constraint(equalToConstant: 80),
-            initialiseBtn.heightAnchor.constraint(equalToConstant: 30),
-            initialiseBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            initialiseBtn.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 50)
-            
-            
-            
-        ])
+        numberLabel.snp.makeConstraints {
+            $0.width.equalTo(80)
+            $0.center.equalToSuperview()
+        }
+        
+        incrementBtn.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 80, height: 30))
+            $0.centerY.equalToSuperview()
+            $0.left.equalTo(numberLabel.snp.right).offset(32)
+        }
+        decrementBtn.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 80, height: 30))
+            $0.centerY.equalToSuperview()
+            $0.right.equalTo(numberLabel.snp.left).offset(-32)
+        }
+        initialiseBtn.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 80, height: 30))
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(numberLabel.snp.bottom).offset(50)
+        }
     }
     @objc
     func incrementBtnTapped() {
